@@ -11,7 +11,7 @@ global with sharing class AXGContracts {
     }
     // Mise à jour des contrats
     @HttpPatch
-    global static void updateAXGContract(){
+    global static Contract updateAXGContract(){
         RestRequest request = RestContext.request;
         String contractId = request.requestURI.substring(request.requestURI.lastIndexOf('/') + 1);
         Contract thisContract = [SELECT Id FROM Contract WHERE Id=:contractId];
@@ -22,5 +22,6 @@ global with sharing class AXGContracts {
             thisContract.put(fieldName,params.get(fieldName));
         }
         update thisContract;
+        return thisContract;
     }
 }
